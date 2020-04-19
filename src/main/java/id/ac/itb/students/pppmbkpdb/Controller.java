@@ -502,30 +502,25 @@ public class Controller {
             @Override
             protected Object call() throws Exception {
                 try {
-                    JSONArray jo = Unirest.get(NIM_FINDER_URL)
+                    JSONObject jb = Unirest.get(NIM_FINDER_URL.replace("{nim}", nim))
                             .queryString("input", nim)
-                            .asJson().getBody().getArray();
+                            .asJson().getBody().getObject();
 
-                    if(jo.length() == 0) {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                mhsNotFound();
-                            }
-                        });
-                    } else {
-                        JSONObject jb = jo.getJSONObject(0);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                mhsFound(jb.getString("nimF"), jb.getString("name"));
-                            }
-                        });
-                        enroll();
-                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            mhsFound(jb.getString("student_id"), jb.getString("name"));
+                        }
+                    });
+                    enroll();
                     return null;
                 } catch (UnirestException e) {
-                    e.printStackTrace();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            mhsNotFound();
+                        }
+                    });
                     return null;
                 }
             }

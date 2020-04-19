@@ -18,7 +18,7 @@ public class Config {
     }
 
     private Config() {
-        this.NIM_FINDER_URL = getEnv("NIM_FINDER_URL", "https://localhost/api.php");
+        this.NIM_FINDER_URL = getEnv("NIM_FINDER_URL", "https://reksti.didithilmy.com/api/smartcampus/students/{nim}/");
         this.FP_SERIAL_PORT = getEnv("FP_SERIAL_PORT", "/dev/tty.usbserial-00000000");  // /dev/ttyUSB0
     }
 
